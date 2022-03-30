@@ -1,18 +1,37 @@
-import { useState } from 'react'
+import axios from 'axios'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Image from '../../assets/logo.png'
+import UserContext from '../../contexts/UserContext'
 import { Input, Main, Img, Button, Label, Form} from '../StyleLoginAndRegister'
 
 export default function Login(){
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const {setUser, setToken} = useContext(UserContext)
+
+    function toLogin(e){
+        e.preventDefault()
+
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',
+        {
+            email: email,
+            password: password
+        })
+        promise.then(response => {
+            setUser(response.data)
+            setToken(response.data.token)
+            navigate('/habitos')
+        })
+        promise.catch(error => alert(error.response))
+    }
 
     return(
         <Main>
             <Img src={Image}/>
 
-            <Form>
+            <Form onSubmit={toLogin}>
                 <Input type="email"
                         placeholder="Email"
                         value={email}
@@ -25,7 +44,7 @@ export default function Login(){
                         onChange={e => setPassword(e.target.value)}
                         required/>
 
-                <Button>Entrar</Button>
+                <Button type='submit'>Entrar</Button>
             </Form>
             
             <Label onClick={()=> navigate("/cadastro")}>

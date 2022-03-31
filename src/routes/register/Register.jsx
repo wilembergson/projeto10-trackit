@@ -55,6 +55,7 @@ export default function Register(){
                         value={image}
                         onChange={e => setImage(e.target.value)}
                         required/>
+                        
                 <Button type="submit">Cadastrar</Button>
             </Form>
 

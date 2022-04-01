@@ -1,44 +1,103 @@
-import { useContext} from "react"
+import axios from "axios"
+import { useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import DayWeek from "../../assets/dayWeek/DayWeek"
 import UserContext from "../../contexts/UserContext"
 
 export default function RegisterTask(){
 
-    const {formRegisterTask, setFormRegisterTask} = useContext(UserContext)
-    /*const [display, setDisplay] = useState('none')
+    const {formRegisterTask, setFormRegisterTask, token} = useContext(UserContext)
 
-    useEffect(() => {
-        if(formRegisterTask === true){
-            setDisplay('flex')
+    const [taskList, setTaskList] = useState([])
+    const [habitName, setHabitName] = useState('')
+    const [days, setDays] = useState([])
+    
+    function addOrRemoveDays(select, numberDay){
+        let daysCopy = days
+        if(select){
+            daysCopy= [...days, numberDay]
+            setDays(daysCopy.sort(toCompare))
         }else{
-            setDisplay('none')
+            let index = daysCopy.indexOf(numberDay)
+            daysCopy.splice(index, 1)
+            setDays(daysCopy)
         }
-    },[formRegisterTask])*/
+    }
 
-    return(formRegisterTask ? (
+    function saveTask(){
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
+            {
+                name: habitName,
+                days: days
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                } 
+            }
+        )
+        promise.then(response => console.log(response.data))
+        promise.catch(error => console.log(error.response))
+
+
+        //setTaskList([...taskList, {name: habitName, days: days}])
+        setHabitName('')
+        setDays([])
+        setFormRegisterTask(false)
+    }
+
+    function toCompare(a, b) {
+        return a - b;
+    }
+
+    useEffect(()=> {
+        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                } 
+            }   
+        )
+        promise.then(response => setTaskList(response.data))
+        promise.catch(error => console.log(error.response))
+    },[taskList])
+
+    return(
+        <>
+            {formRegisterTask ? (
         <Section>
             <form> 
-                <Input placeholder="Nome do hábito"/>
+                <Input  type="text"
+                        value={habitName}
+                        onChange={e => setHabitName(e.target.value)}
+                        placeholder="Nome do hábito"
+                        required/>
                 <Week>
-                    <DayWeek name="D"/>
-                    <DayWeek name="S"/>
-                    <DayWeek name="T"/>
-                    <DayWeek name="Q"/>
-                    <DayWeek name="Q"/>
-                    <DayWeek name="S"/>
-                    <DayWeek name="S"/>
+                    <DayWeek name="D" addOrRemoveDays={addOrRemoveDays} number={7}/>
+                    <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={1}/>
+                    <DayWeek name="T" addOrRemoveDays={addOrRemoveDays} number={2}/>
+                    <DayWeek name="Q" addOrRemoveDays={addOrRemoveDays} number={3}/>
+                    <DayWeek name="Q" addOrRemoveDays={addOrRemoveDays} number={4}/>
+                    <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={5}/>
+                    <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={6}/>
                 </Week>
                 <Line>
                     <Button color='#52B6FF'
                             background='#FFFFFF'
-                            onClick={()=> setFormRegisterTask(false)}
-                            >Cancelar</Button>
-                    <Button color='#FFFFFF' background='#52B6FF'>Confirmar</Button>
+                            onClick={()=> setFormRegisterTask(false)}>Cancelar
+                    </Button>
+                    <Button color='#FFFFFF'
+                            background='#52B6FF'
+                            onClick={()=> saveTask()}>Confirmar
+                    </Button>
                 </Line>
             </form>
         </Section>
-        ):(<></>)
+        ):(<></>)}
+        <div>
+        {taskList.map(task => <div>{task.name}, {task.days}</div>)}
+        </div>
+        </>
     )
 }
 
@@ -87,6 +146,5 @@ const Button = styled.button`
     font-size: 15.976px;
     line-height: 20px;
     text-align: center;
-
     color: ${props => props.color};
 `

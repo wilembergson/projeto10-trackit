@@ -1,19 +1,22 @@
-//import { useContext } from "react"
+import { useContext } from "react"
 import styled from "styled-components"
 import Menu from "../../components/menu/Menu"
+import RegisterTask from "../../components/registerTask/RegisterTask"
 import Top from "../../components/Top/Top"
-//import UserContext from "../../contexts/UserContext"
+import UserContext from "../../contexts/UserContext"
 
 export default function Habits(){
-    //const {user} = useContext(UserContext)
+    const { setFormRegisterTask } = useContext(UserContext)
+
     return(
         <>
             <Top/>
             <Main>
                 <HabitsTitle>
                     Meus hábitos
-                    <AddButton>+</AddButton>
+                    <AddButton onClick={() => setFormRegisterTask(true)}>+</AddButton>
                 </HabitsTitle>
+                <RegisterTask/>
             </Main>
             <Menu/>
         </>
@@ -41,9 +44,11 @@ const HabitsTitle = styled.div`
     color: #126BA5;
 `
 const AddButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 40px;
     height: 35px;
-
     background: #52B6FF;
     border: none;
     border-radius: 4.63636px;

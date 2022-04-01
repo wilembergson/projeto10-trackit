@@ -9,9 +9,19 @@ import Habits from "./routes/habits/Habits"
 export default function App(){
     const [user, setUser] = useState(null)
     const [token, setToken] =useState('')
+    const [formRegisterTask, setFormRegisterTask] = useState(false)
 
+    const contextValues = {
+        user,
+        setUser,
+        token,
+        setToken,
+        formRegisterTask,
+        setFormRegisterTask
+    }
+    
     return(
-       <UserContext.Provider value={{user, setUser, token, setToken}}>
+       <UserContext.Provider value={contextValues}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Login/>}/>

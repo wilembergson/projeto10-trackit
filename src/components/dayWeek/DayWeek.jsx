@@ -30,7 +30,7 @@ export default function DayWeek(props){
     )
 }
 
-const Div = styled.label`
+export const Div = styled.label`
     display: flex;
     justify-content: center;
     align-items: center;

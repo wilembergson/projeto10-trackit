@@ -1,8 +1,9 @@
 import axios from "axios"
 import { useContext, useEffect, useState} from "react"
 import styled from "styled-components"
-import DayWeek from "../../assets/dayWeek/DayWeek"
+import DayWeek from "../dayWeek/DayWeek"
 import UserContext from "../../contexts/UserContext"
+import ItemHabit from "../itemHabit/ItemHabit"
 
 export default function RegisterTask(){
 
@@ -15,7 +16,7 @@ export default function RegisterTask(){
     function addOrRemoveDays(select, numberDay){
         let daysCopy = days
         if(select){
-            daysCopy= [...days, numberDay]
+            daysCopy = [...days, numberDay]
             setDays(daysCopy.sort(toCompare))
         }else{
             let index = daysCopy.indexOf(numberDay)
@@ -39,8 +40,6 @@ export default function RegisterTask(){
         promise.then(response => console.log(response.data))
         promise.catch(error => console.log(error.response))
 
-
-        //setTaskList([...taskList, {name: habitName, days: days}])
         setHabitName('')
         setDays([])
         setFormRegisterTask(false)
@@ -95,16 +94,17 @@ export default function RegisterTask(){
         </Section>
         ):(<></>)}
         <div>
-        {taskList.map(task => <div>{task.name}, {task.days}</div>)}
+        {taskList.map(task => <ItemHabit title={task.name} days={task.days}/>)}
         </div>
         </>
     )
 }
 
-const Section = styled.section`
+export const Section = styled.section`
     display: flex;
     flex-direction: column;
     width: 91%;
+    margin-bottom: 10px;
     padding: 18px;
     background: #FFFFFF;
     border-radius: 5px;

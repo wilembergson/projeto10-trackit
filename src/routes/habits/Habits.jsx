@@ -1,7 +1,7 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import styled from "styled-components"
 import Menu from "../../components/menu/Menu"
-import RegisterTask from "../../components/registerTask/RegisterTask"
+import RegisterTask from "../../components/registerHabit/RegisterHabit"
 import Top from "../../components/Top/Top"
 import UserContext from "../../contexts/UserContext"
 
@@ -29,6 +29,7 @@ const Main = styled.main`
     padding: 0 17px;
     background: #E5E5E5;
     height: 710px;
+    overflow-y: scroll;
 `
 const HabitsTitle = styled.div`
     display: flex;

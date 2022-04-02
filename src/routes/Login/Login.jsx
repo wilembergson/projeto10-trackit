@@ -22,7 +22,7 @@ export default function Login(){
         promise.then(response => {
             setUser(response.data)
             setToken(response.data.token)
-            navigate('/habitos')
+            navigate('/hoje')
         })
         promise.catch(error => alert(error.response))
     }

@@ -25,13 +25,13 @@ export default function ItemHabit(props){
 
     return(
         <Section>
-            <H3>{title}
+            <H2>{title}
                 <Delete>
                     <div onClick={() => deleteHabit(id)}>
                         <ion-icon name="trash-outline"></ion-icon>
                     </div>
                 </Delete>
-            </H3>
+            </H2>
             
             <Week>
                     <SavedDayWeek name="D" number={7} days={days}/>
@@ -59,7 +59,7 @@ const Section = styled.section`
 const Week = styled.div`
     display: flex;
 `
-const H3 = styled.h2`
+const H2 = styled.h2`
     display:flex;
     justify-content: space-between;
     width: 100%;

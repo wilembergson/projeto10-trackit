@@ -28,10 +28,10 @@ export default function Habits(){
         <>
             <Top/>
             <Main>
-                <HabitsTitle>
+                <Title>
                     Meus hábitos
                     <AddButton onClick={() => setFormRegisterHabit(true)}>+</AddButton>
-                </HabitsTitle>
+                </Title>
                 <RegisterTask/>
                 {
                     (habitList.length !== 0) ? habitList.map(habit => 
@@ -44,7 +44,7 @@ export default function Habits(){
         </>
     )
 }
-const Main = styled.main`
+export const Main = styled.main`
     display: flex;
     flex-direction: column;
     margin: 70px 0px 0 0px;
@@ -53,7 +53,7 @@ const Main = styled.main`
     height: 710px;
     overflow-y: scroll;
 `
-const HabitsTitle = styled.div`
+export const Title = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;

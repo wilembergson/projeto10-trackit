@@ -1,12 +1,15 @@
 import styled from "styled-components"
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Menu(){
+    const navigate = useNavigate()
+
     return(
         <Footer>
-            <Item>Hábitos</Item>
-            <Percentage>
+            <Item onClick={()=> navigate('/habitos')}>Hábitos</Item>
+            <Percentage  onClick={()=> navigate('/hoje')}>
             <CircularProgressbar
                 value={63}
                 text={`Hoje`}

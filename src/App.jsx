@@ -5,6 +5,7 @@ import Login from "./routes/Login/Login"
 import Register from "./routes/register/Register"
 import { useState } from "react"
 import Habits from "./routes/habits/Habits"
+import Today from "./routes/Today/Today"
 
 export default function App(){
     const [user, setUser] = useState(null)
@@ -27,6 +28,7 @@ export default function App(){
                     <Route path="/" element={<Login/>}/>
                     <Route path="/cadastro" element={<Register/>}/>
                     <Route path="/habitos" element={<Habits/>}/>
+                    <Route path="/hoje" element={<Today/>}/>
                 </Routes>
             </BrowserRouter>
        </UserContext.Provider>

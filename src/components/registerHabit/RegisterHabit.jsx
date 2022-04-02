@@ -7,9 +7,9 @@ import ItemHabit from "../itemHabit/ItemHabit"
 
 export default function RegisterTask(){
 
-    const {formRegisterTask, setFormRegisterTask, token} = useContext(UserContext)
+    const {formRegisterHabit, setFormRegisterHabit, token} = useContext(UserContext)
 
-    const [taskList, setTaskList] = useState([])
+   
     const [habitName, setHabitName] = useState('')
     const [days, setDays] = useState([])
     
@@ -40,62 +40,52 @@ export default function RegisterTask(){
         promise.then(response => console.log(response.data))
         promise.catch(error => console.log(error.response))
 
+        clearFormRegisterHabit()
+    }
+
+    function clearFormRegisterHabit(){
         setHabitName('')
         setDays([])
-        setFormRegisterTask(false)
+        setFormRegisterHabit(false)
     }
 
     function toCompare(a, b) {
         return a - b;
     }
 
-    useEffect(()=> {
-        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                } 
-            }   
-        )
-        promise.then(response => setTaskList(response.data))
-        promise.catch(error => console.log(error.response))
-    },[taskList])
-
     return(
         <>
-            {formRegisterTask ? (
-        <Section>
-            <form> 
-                <Input  type="text"
-                        value={habitName}
-                        onChange={e => setHabitName(e.target.value)}
-                        placeholder="Nome do hábito"
-                        required/>
-                <Week>
-                    <DayWeek name="D" addOrRemoveDays={addOrRemoveDays} number={7}/>
-                    <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={1}/>
-                    <DayWeek name="T" addOrRemoveDays={addOrRemoveDays} number={2}/>
-                    <DayWeek name="Q" addOrRemoveDays={addOrRemoveDays} number={3}/>
-                    <DayWeek name="Q" addOrRemoveDays={addOrRemoveDays} number={4}/>
-                    <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={5}/>
-                    <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={6}/>
-                </Week>
-                <Line>
-                    <Button color='#52B6FF'
-                            background='#FFFFFF'
-                            onClick={()=> setFormRegisterTask(false)}>Cancelar
-                    </Button>
-                    <Button color='#FFFFFF'
-                            background='#52B6FF'
-                            onClick={()=> saveTask()}>Confirmar
-                    </Button>
-                </Line>
-            </form>
-        </Section>
-        ):(<></>)}
-        <div>
-        {taskList.map(task => <ItemHabit title={task.name} days={task.days}/>)}
-        </div>
+            {formRegisterHabit ? (
+                <Section>
+                    <form> 
+                        <Input  type="text"
+                                value={habitName}
+                                onChange={e => setHabitName(e.target.value)}
+                                placeholder="Nome do hábito"
+                                required/>
+                        <Week>
+                            <DayWeek name="D" addOrRemoveDays={addOrRemoveDays} number={7}/>
+                            <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={1}/>
+                            <DayWeek name="T" addOrRemoveDays={addOrRemoveDays} number={2}/>
+                            <DayWeek name="Q" addOrRemoveDays={addOrRemoveDays} number={3}/>
+                            <DayWeek name="Q" addOrRemoveDays={addOrRemoveDays} number={4}/>
+                            <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={5}/>
+                            <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={6}/>
+                        </Week>
+                        <Line>
+                            <Button color='#52B6FF'
+                                    background='#FFFFFF'
+                                    onClick={()=> clearFormRegisterHabit()}>Cancelar
+                            </Button>
+                            <Button color='#FFFFFF'
+                                    background='#52B6FF'
+                                    onClick={()=> saveTask()}>Confirmar
+                            </Button>
+                        </Line>
+                    </form>
+                </Section>
+                ):(<></>)
+            }
         </>
     )
 }

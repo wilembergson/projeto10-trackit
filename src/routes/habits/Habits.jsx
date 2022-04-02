@@ -1,12 +1,28 @@
-import { useContext } from "react"
+import axios from "axios"
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
+import ItemHabit from "../../components/itemHabit/ItemHabit"
 import Menu from "../../components/menu/Menu"
 import RegisterTask from "../../components/registerHabit/RegisterHabit"
 import Top from "../../components/Top/Top"
 import UserContext from "../../contexts/UserContext"
 
 export default function Habits(){
-    const { setFormRegisterTask } = useContext(UserContext)
+    const { setFormRegisterHabit, token} = useContext(UserContext)
+    const [habitList, setHabitList] = useState([])
+    const mensage = 'Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!'
+
+    useEffect(()=> {
+        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                } 
+            } 
+        )
+        promise.then(response => setHabitList(response.data))
+        promise.catch(error => console.log(error.response))
+    },[habitList])
 
     return(
         <>
@@ -14,9 +30,15 @@ export default function Habits(){
             <Main>
                 <HabitsTitle>
                     Meus hábitos
-                    <AddButton onClick={() => setFormRegisterTask(true)}>+</AddButton>
+                    <AddButton onClick={() => setFormRegisterHabit(true)}>+</AddButton>
                 </HabitsTitle>
                 <RegisterTask/>
+                {
+                    (habitList.length !== 0) ? habitList.map(habit => 
+                        <ItemHabit id={habit.id} title={habit.name} days={habit.days}/>
+                    )
+                    : <Mensage>{mensage}</Mensage>
+                }
             </Main>
             <Menu/>
         </>
@@ -61,4 +83,12 @@ const AddButton = styled.button`
     line-height: 34px;
     text-align: center;
     color: #FFFFFF;
+`
+const Mensage = styled.h2`
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17.976px;
+    line-height: 22px;
+    color: #666666;
 `

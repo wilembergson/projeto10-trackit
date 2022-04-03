@@ -2,16 +2,36 @@ import styled from "styled-components"
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import UserContext from "../../contexts/UserContext";
+import { useState } from "react/cjs/react.development";
 
 export default function Menu(){
+    const {todayHabits} = useContext(UserContext)
     const navigate = useNavigate()
+
+    const [donePercentage, setDonePercentage] = useState(0)
+
+    useEffect(()=>{
+        completePercentage()
+    },[todayHabits])
+
+    function completePercentage(){
+        let cont = 0
+        todayHabits.forEach(habit =>{
+            if(habit.done){
+                cont += 1
+            }
+        })
+        setDonePercentage((cont/todayHabits.length)*100)
+    }
 
     return(
         <Footer>
             <Item onClick={()=> navigate('/habitos')}>Hábitos</Item>
             <Percentage  onClick={()=> navigate('/hoje')}>
             <CircularProgressbar
-                value={63}
+                value={donePercentage}
                 text={`Hoje`}
                 background
                 backgroundPadding={6}

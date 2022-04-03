@@ -9,8 +9,8 @@ import UserContext from "../../contexts/UserContext";
 import { Main, Title } from "../habits/Habits";
 
 export default function Today(){
-    const {token, todayDate, setTodayHabitsDone} = useContext(UserContext)
-    const [todayHabits, setTodayHabits] = useState([])
+    const {token, todayDate, todayHabits, setTodayHabits} = useContext(UserContext)
+ 
     const [weekDay, setWeekDay] = useState('')
     const [monthDay, setMonthDay] = useState(todayDate.monthDay)
     const [month, setMonth] = useState(todayDate.month + 1)

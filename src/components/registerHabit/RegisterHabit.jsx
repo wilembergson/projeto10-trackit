@@ -64,7 +64,7 @@ export default function RegisterTask(){
                                 placeholder="Nome do hábito"
                                 required/>
                         <Week>
-                            <DayWeek name="D" addOrRemoveDays={addOrRemoveDays} number={7}/>
+                            <DayWeek name="D" addOrRemoveDays={addOrRemoveDays} number={0}/>
                             <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={1}/>
                             <DayWeek name="T" addOrRemoveDays={addOrRemoveDays} number={2}/>
                             <DayWeek name="Q" addOrRemoveDays={addOrRemoveDays} number={3}/>

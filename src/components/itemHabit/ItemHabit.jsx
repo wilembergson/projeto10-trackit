@@ -34,7 +34,7 @@ export default function ItemHabit(props){
             </H2>
             
             <Week>
-                    <SavedDayWeek name="D" number={7} days={days}/>
+                    <SavedDayWeek name="D" number={0} days={days}/>
                     <SavedDayWeek name="S" number={1} days={days}/>
                     <SavedDayWeek name="T" number={2} days={days}/>
                     <SavedDayWeek name="Q" number={3} days={days}/>

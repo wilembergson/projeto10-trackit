@@ -12,6 +12,7 @@ export default function App(){
     const [user, setUser] = useState(null)
     const [token, setToken] =useState('')
     const [formRegisterHabit, setFormRegisterHabit] = useState(false)
+    const [todayHabitsDone, setTodayHabitsDone] = useState([])
     const todayDate = {
         weekDay: dayjs().day(),
         monthDay: dayjs().date(),
@@ -25,7 +26,9 @@ export default function App(){
         setToken,
         formRegisterHabit,
         setFormRegisterHabit,
-        todayDate
+        todayDate,
+        todayHabitsDone,
+        setTodayHabitsDone
     }
     
     return(

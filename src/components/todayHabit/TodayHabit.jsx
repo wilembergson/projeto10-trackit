@@ -1,17 +1,56 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useContext, useEffect, useState } from 'react';
 import {BsFillCheckSquareFill} from 'react-icons/bs'
 import styled from "styled-components";
+import UserContext from '../../contexts/UserContext';
 
 export default function TodayHabit(props){
-    const {id, name, currentSequence, highestSequence} = props
-    const [color, setColor] = useState('#EBEBEB')
+    const habitColors = {active:'#8FC549', disable:'#EBEBEB'}
 
-    function changeColor(){
-        if(color === '#EBEBEB'){
-            setColor('#8FC549')
-        }else{
-            setColor('#EBEBEB')
+    const {token} = useContext(UserContext)
+    const {id, name, done,currentSequence, highestSequence} = props
+    const [color, setColor] = useState(habitColors.disable)
+
+    useEffect(()=>{
+        if(done){
+            setColor(habitColors.active)
         }
+    },[])
+
+    function markOfMarkOffHabit(){
+        if(done === false){
+            setColor(habitColors.active)
+            markAsDone()
+        }else{
+            setColor(habitColors.disable)
+            markAsNotDone()
+        }
+    }
+
+    function markAsDone(){
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                } 
+            } 
+        )
+        promise.then(response => console.log('Habit done.'))
+        promise.catch(error => console.log( error.response))
+    }
+
+    function markAsNotDone(){
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                } 
+            } 
+        )
+        promise.then(response => console.log('Habit not done.'))
+        promise.catch(error => console.log(error.response))
     }
 
     return(
@@ -21,7 +60,7 @@ export default function TodayHabit(props){
                 <Subtitle>{`Sequência atual: ${currentSequence} dias`}</Subtitle>
                 <Subtitle>{`Seu record: ${highestSequence} dias`}</Subtitle>
             </Informations>
-            <div onClick={()=> changeColor()}>
+            <div onClick={()=> markOfMarkOffHabit()}>
                 <BsFillCheckSquareFill size={69} color={color}/>
             </div>
         </Section>

@@ -9,7 +9,7 @@ import UserContext from "../../contexts/UserContext";
 import { Main, Title } from "../habits/Habits";
 
 export default function Today(){
-    const {token, todayDate} = useContext(UserContext)
+    const {token, todayDate, setTodayHabitsDone} = useContext(UserContext)
     const [todayHabits, setTodayHabits] = useState([])
     const [weekDay, setWeekDay] = useState('')
     const [monthDay, setMonthDay] = useState(todayDate.monthDay)
@@ -33,6 +33,7 @@ export default function Today(){
         promise.catch(error => console.log(error.response))
     },[todayHabits])
 
+    //Adiciona "0" quando o dia ou mẽs é menor que 10
     function addZero(number, set){
         if(number < 10){
             set(`0${number}`)
@@ -74,6 +75,7 @@ export default function Today(){
                 <Title>{weekDay}, {monthDay}/{month}</Title>
                 {todayHabits.map(habit => <TodayHabit   id={habit.id}
                                                         name={habit.name}
+                                                        done={habit.done}
                                                         currentSequence={habit.currentSequence}
                                                         highestSequence={habit.highestSequence}/>)
                 }

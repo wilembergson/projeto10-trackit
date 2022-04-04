@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { Suspense, useContext, useEffect, useState } from 'react';
 import {BsFillCheckSquareFill} from 'react-icons/bs'
 import styled from "styled-components";
 import UserContext from '../../contexts/UserContext';
 
 export default function TodayHabit(props){
-    const habitColors = {active:'#8FC549', disable:'#EBEBEB'}
+    const habitColors = {active:'#8FC549', disable:'#EBEBEB', subtitle:'#666666'}
 
     const {token} = useContext(UserContext)
-    const {id, name, done,currentSequence, highestSequence} = props
+    const {id, name, done, currentSequence, highestSequence} = props
     const [color, setColor] = useState(habitColors.disable)
 
     useEffect(()=>{
@@ -57,8 +57,18 @@ export default function TodayHabit(props){
         <Section>
             <Informations>
                 <Title>{name}</Title>
-                <Subtitle>{`Sequência atual: ${currentSequence} dias`}</Subtitle>
-                <Subtitle>{`Seu record: ${highestSequence} dias`}</Subtitle>
+                <Subtitle color={habitColors.subtitle}>
+                    {`Sequência atual`} 
+                    <Subtitle color={currentSequence > 0 ? habitColors.active : habitColors.subtitle}>
+                        {`: ${currentSequence} dias`}
+                    </Subtitle>
+                </Subtitle>
+                <Subtitle color={habitColors.subtitle}>
+                    {`Seu record`}
+                    <Subtitle color={(currentSequence === highestSequence && highestSequence > 0) ? habitColors.active : habitColors.subtitle}>
+                        {`: ${highestSequence} dias`}
+                    </Subtitle>
+                </Subtitle>
             </Informations>
             <div onClick={()=> markOfMarkOffHabit()}>
                 <BsFillCheckSquareFill size={69} color={color}/>
@@ -89,10 +99,11 @@ const Title = styled.h2`
     color: #666666;
 `
 const Subtitle = styled.h3`
+    display: flex;
     font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
     font-size: 12.976px;
     line-height: 16px;
-    color: #666666;
+    color: ${props => props.color};
 `

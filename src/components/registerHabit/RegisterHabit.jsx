@@ -1,9 +1,8 @@
 import axios from "axios"
-import { useContext, useEffect, useState} from "react"
+import { useContext, useState} from "react"
 import styled from "styled-components"
 import DayWeek from "../dayWeek/DayWeek"
 import UserContext from "../../contexts/UserContext"
-import ItemHabit from "../itemHabit/ItemHabit"
 
 export default function RegisterTask(){
 

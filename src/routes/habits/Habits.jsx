@@ -53,7 +53,7 @@ export const Main = styled.main`
     height: 710px;
     overflow-y: scroll;
 `
-export const Title = styled.div`
+const Title = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;

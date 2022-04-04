@@ -4,13 +4,10 @@ import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import UserContext from "../../contexts/UserContext";
-import { useState } from "react/cjs/react.development";
 
 export default function Menu(){
-    const {todayHabits} = useContext(UserContext)
+    const {todayHabits, donePercentage, setDonePercentage} = useContext(UserContext)
     const navigate = useNavigate()
-
-    const [donePercentage, setDonePercentage] = useState(0)
 
     useEffect(()=>{
         completePercentage()

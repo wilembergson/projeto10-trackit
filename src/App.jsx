@@ -7,6 +7,7 @@ import { useState } from "react"
 import Habits from "./routes/habits/Habits"
 import Today from "./routes/Today/Today"
 import dayjs from "dayjs"
+import Historic from "./routes/historic/Historic"
 
 export default function App(){
     const [user, setUser] = useState(null)
@@ -42,6 +43,7 @@ export default function App(){
                     <Route path="/cadastro" element={<Register/>}/>
                     <Route path="/habitos" element={<Habits/>}/>
                     <Route path="/hoje" element={<Today/>}/>
+                    <Route path="/historico" element={<Historic/>}/>
                 </Routes>
             </BrowserRouter>
        </UserContext.Provider>

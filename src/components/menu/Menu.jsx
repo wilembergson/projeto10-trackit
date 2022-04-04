@@ -40,7 +40,7 @@ export default function Menu(){
                 })}
             />
             </Percentage>
-            <Item>Histórico</Item>
+            <Item onClick={()=> navigate('/historico')}>Histórico</Item>
         </Footer>
     )
 }
@@ -50,7 +50,7 @@ const Footer = styled.footer`
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    height: 70px;
+    height: 80px;
     position: fixed;
     bottom: 0;
     background: #ffffff;

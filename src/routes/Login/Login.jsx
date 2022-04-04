@@ -24,7 +24,7 @@ export default function Login(){
             setToken(response.data.token)
             navigate('/hoje')
         })
-        promise.catch(error => alert(error.response))
+        promise.catch(error => alert('Usuário ou senha incorretos.'))
     }
 
     return(

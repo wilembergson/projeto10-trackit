@@ -49,7 +49,10 @@ export default function RegisterTask(){
             }
         )
         promise.then(response => console.log(response.data))
-        promise.catch(error => console.log(error.response))
+        promise.catch(error => {
+            console.log(error.response)
+            offLoad()
+        })
 
         clearFormRegisterHabit()
     }

@@ -15,12 +15,17 @@ export default function Menu(){
 
     function completePercentage(){
         let cont = 0
-        todayHabits.forEach(habit =>{
-            if(habit.done){
-                cont += 1
-            }
-        })
-        setDonePercentage((cont/todayHabits.length)*100)
+        if(todayHabits.length > 0){
+            todayHabits.forEach(habit =>{
+                if(habit.done){
+                    cont += 1
+                }
+            })
+            setDonePercentage((cont/todayHabits.length)*100)
+        }else{
+            setDonePercentage(0)
+        }
+        
     }
 
     return(

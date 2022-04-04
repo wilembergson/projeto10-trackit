@@ -7,10 +7,21 @@ import UserContext from "../../contexts/UserContext"
 export default function RegisterTask(){
 
     const {formRegisterHabit, setFormRegisterHabit, token} = useContext(UserContext)
-
    
     const [habitName, setHabitName] = useState('')
     const [days, setDays] = useState([])
+    const [load, setLoad] = useState(false)
+    const [disable, setDisable] = useState(false)
+
+    function onLoad(){
+        setLoad(true)
+        setDisable(true)
+    }
+
+    function offLoad(){
+        setLoad(false)
+        setDisable(false)
+    }
     
     function addOrRemoveDays(select, numberDay){
         let daysCopy = days
@@ -25,6 +36,7 @@ export default function RegisterTask(){
     }
 
     function saveTask(){
+        onLoad()
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
             {
                 name: habitName,
@@ -61,7 +73,8 @@ export default function RegisterTask(){
                                 value={habitName}
                                 onChange={e => setHabitName(e.target.value)}
                                 placeholder="Nome do hábito"
-                                required/>
+                                required
+                                disabled={disable}/>
                         <Week>
                             <DayWeek name="D" addOrRemoveDays={addOrRemoveDays} number={0}/>
                             <DayWeek name="S" addOrRemoveDays={addOrRemoveDays} number={1}/>
@@ -78,6 +91,7 @@ export default function RegisterTask(){
                             </Button>
                             <Button color='#FFFFFF'
                                     background='#52B6FF'
+                                    disabled={disable}
                                     onClick={()=> saveTask()}>Confirmar
                             </Button>
                         </Line>

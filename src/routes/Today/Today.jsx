@@ -8,7 +8,7 @@ import UserContext from "../../contexts/UserContext";
 import { Main } from "../habits/Habits";
 
 export default function Today(){
-    const {token, todayDate, todayHabits, setTodayHabits, donePercentage, setDonePercentage} = useContext(UserContext)
+    const {token, todayDate, todayHabits, setTodayHabits, donePercentage} = useContext(UserContext)
  
     const [weekDay, setWeekDay] = useState('')
     const [monthDay, setMonthDay] = useState(todayDate.monthDay)
@@ -19,7 +19,6 @@ export default function Today(){
         setWeekDay(getWeekDay())
         addZero(monthDay, setMonthDay)
         addZero(month, setMonth)
-        setDonePercentage(0)
     },[])
 
     useEffect(()=> {
@@ -75,7 +74,7 @@ export default function Today(){
             <Main>
                 <Title>{weekDay}, {monthDay}/{month}</Title>
                 {(donePercentage === 0) ? <Subtitle color={colors.grey}>Nenhum hábito concluído ainda</Subtitle>
-                    : <Subtitle color={colors.green}>{donePercentage}% dos hábitos concluídos</Subtitle>}
+                    : <Subtitle color={colors.green}>{donePercentage.toFixed(0)}% dos hábitos concluídos</Subtitle>}
                 
                 {todayHabits.map(habit => <TodayHabit   id={habit.id}
                                                         name={habit.name}

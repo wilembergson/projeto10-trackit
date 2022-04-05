@@ -48,7 +48,10 @@ export default function RegisterTask(){
                 } 
             }
         )
-        promise.then(response => console.log(response.data))
+        promise.then(response => {
+            console.log(response.data)
+            offLoad()
+        })
         promise.catch(error => {
             console.log(error.response)
             offLoad()
